@@ -1,13 +1,163 @@
-body {
+/* FOOTER STYKLING */
+body, html {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+
+
+
+.my-footer {
+    color: #f0e8e8;
+    background-color: #444;
+    padding: 20px;
+    text-align: center;
+    /* position: fixed; */
+    padding-bottom: 8vh;
+    width: 100%;
+    font-weight: 500;
+    z-index: 100;
+    font-size: 14px;
 }
+
+.food-menu-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.food-buttons {
+  margin-bottom: 20px;
+}
+
+.food-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ddd;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.food-buttons button.active,
+.food-buttons button:hover {
+  background-color: #444;
+  color: white;
+}
+
+
+
+
+
+
+
+.food-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.food-card {
+  width: 250px;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  position: relative;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.food-card .overlay {
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.food-card h4,
+.food-card p {
+  margin: 0 0 5px 0;
+}
+
+.food-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.food-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.food-actions button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+.food-actions button:last-child {
+  background-color: #28a745;
+  color: white;
+}
+
+.food-actions button:first-child:hover {
+  background-color: #0056b3;
+}
+
+.food-actions button:last-child:hover {
+  background-color: #1e7e34;
+}
+
+
+
+
+
+
+
+
+/* home menu offer and cart */
+.offer-cart-outer{
+  background-color: rgb(244, 220, 220);
+  height: 7vh;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  right: 0;
+  padding: 4px;
+}
+
+.offer-cart{
+  height: 100%;
+  width: 100%;
+  background-color: rgb(237, 41, 41);
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* padding: 2px; */
+
+}
+
+
+.left-section{
+  /* padding: 2px; */
+}
+
+.right-section{
+  /* padding: 2px; */
+  color: white;
+}
+
+
