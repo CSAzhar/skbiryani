@@ -6,6 +6,8 @@ import Orders from "./pages/orders/Orders";
 import Sidebar from "./components/side-bar/Sidebar";
 import Menubar from "./components/menu-bar/Menubar";
 import DashBoard from "./pages/dash-board/DashBoard";
+import { ToastContainer} from 'react-toastify';
+import LiveFood from "./pages/live-food/LiveFood";
 
 
 const App = () => {
@@ -22,12 +24,14 @@ const App = () => {
       <Sidebar sidebarVisible={sidebarVisible}/>
 
       <div id="page-content-wrapper">
+        <ToastContainer />
 
         <Menubar toggleSidebar={toggleSidebar}/>
 
         <div className="container-fluid">
           <Routes>
             <Route path='/dashboard' element={<DashBoard />} />
+            <Route path='livefood' element={<LiveFood />}/>
             <Route path='/addfood' element={<AddFood />} />
             <Route path='/listfood' element={<ListFood />} />
             <Route path='/orders' element={<Orders />} />

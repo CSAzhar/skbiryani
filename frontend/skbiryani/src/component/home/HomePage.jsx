@@ -1,107 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import ApiService from "../../services/ApiServices";
 
-const foodItems = [
-  {
-    id: 1,
-    name: "Chicken Biryani",
-    type: "Biryani",
-    imageUrl:
-      "https://www.cubesnjuliennes.com/wp-content/uploads/2020/07/Chicken-Biryani-Recipe.jpg",
-    price: 250,
-    details: "Spicy and flavorful chicken biryani cooked with aromatic spices.",
-  },
-  {
-    id: 2,
-    name: "Mutton Biryani",
-    type: "Biryani",
-    imageUrl: "https://images.pexels.com/photos/16020573/pexels-photo-16020573.jpeg?cs=srgb&dl=pexels-gourav-sarkar-462560178-16020573.jpg&fm=jpg",
-    price: 300,
-    details: "Tender mutton cooked with basmati rice and rich spices.",
-  },
-  {
-    id: 3,
-    name: "Gulab Jamun",
-    type: "Sweets",
-    imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLroXOalaL5F7n-8Qrx6Tu44ksoKYA9kbqxA&s",
-    price: 100,
-    details: "Soft milk-solid-based sweet balls soaked in sugar syrup.",
-  },
-  {
-    id: 4,
-    name: "Rasgulla",
-    type: "Sweets",
-    imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLroXOalaL5F7n-8Qrx6Tu44ksoKYA9kbqxA&s",
-    price: 90,
-    details: "Spongy and juicy cottage cheese balls in sugar syrup.",
-  },
-  {
-    id: 5,
-    name: "Paneer Biryani",
-    type: "Biryani",
-    imageUrl: "https://example.com/images/paneer-biryani.jpg",
-    price: 220,
-    details: "Delicious biryani with cubes of paneer and fragrant spices.",
-  },
-  {
-    id: 6,
-    name: "Chicken Biryani",
-    type: "Biryani",
-    imageUrl: "https://example.com/images/chicken-biryani.jpg",
-    price: 250,
-    details: "Spicy and flavorful chicken biryani cooked with aromatic spices.",
-  },
-  {
-    id: 7,
-    name: "Mutton Biryani",
-    type: "Biryani",
-    imageUrl: "https://images.pexels.com/photos/16020573/pexels-photo-16020573.jpeg?cs=srgb&dl=pexels-gourav-sarkar-462560178-16020573.jpg&fm=jpg",
-    price: 300,
-    details: "Tender mutton cooked with basmati rice and rich spices.",
-  },
-  {
-    id: 8,
-    name: "Gulab Jamun",
-    type: "Sweets",
-    imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLroXOalaL5F7n-8Qrx6Tu44ksoKYA9kbqxA&s",
-    price: 100,
-    details: "Soft milk-solid-based sweet balls soaked in sugar syrup.",
-  },
-  {
-    id: 9,
-    name: "Rasgulla",
-    type: "Sweets",
-    imageUrl: "https://example.com/images/rasgulla.jpg",
-    price: 90,
-    details: "Spongy and juicy cottage cheese balls in sugar syrup.",
-  },
-  {
-    id: 10,
-    name: "Paneer Biryani",
-    type: "Biryani",
-    imageUrl: "https://example.com/images/paneer-biryani.jpg",
-    price: 220,
-    details: "Delicious biryani with cubes of paneer and fragrant spices.",
-  },
-];
+
 
 const HomePage = () => {
-  const [selectedType, setSelectedType] = useState("All");
-  const types = ["All", "Biryani", "Sweets"];
 
-  const filteredItems =
-    selectedType === "All"
-      ? foodItems
-      : foodItems.filter((item) => item.type === selectedType);
+  // const [selectedType, setSelectedType] = useState("All");
+  // const types = ["All", "Biryani", "Sweets"];
+
+  // const filteredItems =
+  //   selectedType === "All"
+  //     ? foodItems
+  //     : foodItems.filter((item) => item.type === selectedType);
 
   const [cartItems, setCartItems] = useState(0);
 
   const handleAddToCart = () => {
-    setCartItems(cartItems + 1);
+    // setCartItems(cartItems + 1);
   };
+
+  const [foodItems, setFoodItems] = useState([]);
+
+    const fetchList = async() => {
+        const response = await ApiService.getAllFood();
+        if(response){
+          setFoodItems(response);
+            // console.log(response);
+        }else{
+            toast.error('Error while loading foods');
+        }
+    }
+
+    useEffect( () => {
+      fetchList();
+  }, [] )
 
   return (
     <div className="food-menu-container">
-      <div className="food-buttons">
+      {/* <div className="food-buttons">
         {types.map((type) => (
           <button
             key={type}
@@ -111,10 +48,10 @@ const HomePage = () => {
             {type}
           </button>
         ))}
-      </div>
+      </div> */}
 
       <div className="food-cards">
-        {filteredItems.map((item) => (
+        {foodItems.map((item) => (
           <div
             key={item.id}
             className="food-card"
