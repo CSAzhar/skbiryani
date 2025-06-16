@@ -24,9 +24,9 @@ const AddFood = () => {
         setData(data => ({...data, [name]: value}));
         // console.log(data);
     }
-    useEffect(() => {
-        console.log(data);
-    }), [data];
+    // useEffect(() => {
+    //     console.log(data);
+    // }), [data];
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         if(!image){
@@ -35,10 +35,6 @@ const AddFood = () => {
         }
 
         const formData = new FormData(event.target);
-         formData.append("name", data.name);
-        formData.append("description", data.description);
-        formData.append("price", data.price);
-        formData.append("categoryId", data.categoryId);
         formData.append("file", image);
         try{
             const result =  await ApiService.addFood(formData);

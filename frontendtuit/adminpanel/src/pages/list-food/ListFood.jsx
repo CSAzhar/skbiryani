@@ -7,6 +7,7 @@ const ListFood = () => {
 
     const fetchList = async() => {
         const response = await ApiService.getAllFood();
+        console.log(response);
         if(response){
             setList(response);
             // console.log(response);
@@ -61,7 +62,7 @@ const ListFood = () => {
                                                 <img src={item.imageUrl} alt="item photo" height={50}></img>
                                             </td>
                                             <td>{item.name}</td>
-                                            <td>{item.category}</td>
+                                            <td>{item.category.name}</td>
                                             <td>{item.price}</td>
                                             <td>{item.description}</td>
                                             <td>

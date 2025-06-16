@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {assets} from '../../assets/assets';
+import './Sidebar.css'
 
 const Sidebar = ({sidebarVisible}) => {
     return (
@@ -15,7 +16,7 @@ const Sidebar = ({sidebarVisible}) => {
                 </Link>
 
                 <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/livefood">
-                    <i className="bi bi-fork-knife me-2"></i> Live Food
+                <div className="blinking-text"> <i className="bi bi-fork-knife me-2"></i>  Live Food</div>
                 </Link>
 
                 <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/addfood">
