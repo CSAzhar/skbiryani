@@ -8,6 +8,7 @@ import Menubar from "./components/menu-bar/Menubar";
 import DashBoard from "./pages/dash-board/DashBoard";
 import { ToastContainer} from 'react-toastify';
 import LiveFood from "./pages/live-food/LiveFood";
+import AddCategory from "./pages/add-category/AddCategory";
 
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
             <Route path='/dashboard' element={<DashBoard />} />
             <Route path='livefood' element={<LiveFood />}/>
             <Route path='/addfood' element={<AddFood />} />
+            <Route path='/addcategory' element={<AddCategory />}/>
             <Route path='/listfood' element={<ListFood />} />
             <Route path='/orders' element={<Orders />} />
             <Route path='/' element={<DashBoard />} />

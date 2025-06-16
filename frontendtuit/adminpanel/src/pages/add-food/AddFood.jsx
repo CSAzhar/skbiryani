@@ -1,25 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {assets} from '../../assets/assets';
 import ApiService from "../../services/FoodApiService";
 import { toast } from "react-toastify";
+import CategoryApiService from "../../services/CategoryApiService";
 
 const AddFood = () => {
 
     const [image, setImage] = useState(false);
+    const [allCategory, setAllCategory] = useState([]);
     const [data, setData] = useState({
         name:'',
         description:'',
         price:'',
-        category:'Biryani'
+        categoryId:''
     });
+    const getAllCategory = async () => {
+            const response = await CategoryApiService.getAllCategory();
+            setAllCategory(response);
+    }
     const onChangeHandler = (event) => {
         const name = event.target.name;
         const value = event.target.value;
         setData(data => ({...data, [name]: value}));
+        // console.log(data);
     }
-    // useEffect(() => {
-    //     console.log(data);
-    // }), [data];
+    useEffect(() => {
+        console.log(data);
+    }), [data];
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         if(!image){
@@ -28,13 +35,17 @@ const AddFood = () => {
         }
 
         const formData = new FormData(event.target);
-        formData.append("file", image);  
+         formData.append("name", data.name);
+        formData.append("description", data.description);
+        formData.append("price", data.price);
+        formData.append("categoryId", data.categoryId);
+        formData.append("file", image);
         try{
             const result =  await ApiService.addFood(formData);
             console.log(result);
             if(result.statusCode === 200){
                 toast.success('Food Added successfully');
-                setData({name:'', description:'', category:'Biryani', price:''});
+                setData({name:'', description:'', categoryId:'', price:''});
                 setImage(null);
             }
         }catch(error){
@@ -42,6 +53,9 @@ const AddFood = () => {
 
         }
     }
+    useEffect( () => {
+            getAllCategory();
+    }, [] )
 
     return (
         <div className="container mt-3 m-2">
@@ -76,11 +90,13 @@ const AddFood = () => {
 
                             <div className="mb-5">
                                 <label htmlFor="category" className="form-label">Category</label>
-                                <select name="category" id="category" className="form-control"  onChange={onChangeHandler} value={data.category}>
-                                    <option value="Biryani">Biryani</option>
-                                    <option value="Chaap">Chaap</option>
-                                    <option value="Rolls">Rolls</option>
-                                    <option value="Salad">Salad</option>
+                                <select name="categoryId" id="categoryId" className="form-control" onChange={onChangeHandler} value={data.categoryId}>
+                                    <option value="">Select Category</option>
+                                    {allCategory.map(category => (
+                                        <option key={category.id} value={category.id}>
+                                            {category.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
