@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import ApiService from "../../services/ApiServices";
 import "./HomePage.css";
-import assets from "../../assets/assets.js";
-// import logo from '../../assets/assets.js/icon.jpg';
 import logo from "./icon.jpg";
 
 const HomePage = () => {
@@ -12,7 +10,6 @@ const HomePage = () => {
   const [foodItems, setFoodItems] = useState([]);
   const [category, setCategory] = useState([]);
 
-  // Get unique types from foodItems
   const types = [
     "All",
     ...new Set(foodItems.map((item) => item.category.name)),
@@ -53,25 +50,23 @@ const HomePage = () => {
 
   return (
     <div className="home-container">
-      {/* First Div - Filtered Section */}
+
       <div className="filtered-section">
-        {/* Category Selection Div */}
+
         <div className="category-selection">
-          <h2>Browse by Category</h2>
+          <h2 className="cat-selec-text">What are you craving for?</h2>
           <div className="category-buttons">
             {["All", ...category.map((cat) => cat.name)].map((type) => (
               <button
                 key={type}
                 onClick={() => setSelectedType(type)}
-                className={`category-button ${
-                  selectedType === type ? "active-category" : ""
-                }`}
+                className={`category-button ${selectedType === type ? "active-category" : ""
+                  }`}
                 style={{
-                  backgroundImage: `url(${
-                    type === "All"
-                      ? logo // fallback image for "All"
-                      : category.find((c) => c.name === type)?.imageUrl || logo
-                  })`,
+                  backgroundImage: `url(${type === "All"
+                    ? logo // fallback image for "All"
+                    : category.find((c) => c.name === type)?.imageUrl || logo
+                    })`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   color: "#fff",
@@ -84,8 +79,8 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* Selected Category Items Div */}
-        <div className="category-items">
+
+        {/* <div className="category-items">
           <h2>{selectedType === "All" ? "All Items" : selectedType}</h2>
           <div className="items-grid">
             {filteredItems.map((item) => (
@@ -93,7 +88,7 @@ const HomePage = () => {
                 <img src={item.imageUrl} alt={item.name} />
                 <div className="food-info">
                   <h3>{item.name}</h3>
-                  <p>Type: {item.type}</p>
+                  <p>Type: {item.category.name}</p>
                   <button onClick={() => handleAddToCart(item)}>
                     Add to Cart
                   </button>
@@ -101,10 +96,50 @@ const HomePage = () => {
               </div>
             ))}
           </div>
+        </div> */}
+
+        <div className="category-items">
+
+          {filteredItems.map((item) => (
+            <div
+              key={item.id}
+              className="custom-food-card"
+              style={{
+                backgroundImage: `url(${item.imageUrl})`,
+              }}
+            >
+              <div className="card-overlay">
+                <div className="card-overlay-f">
+                  <h3>{item.name}</h3>
+                  <p>{item.description}</p>
+                </div>
+
+                <div className="card-overlay-s">
+                  <div>
+                    <h3>&#8377;{item.price}</h3>
+                  </div>
+                  <div>
+                    {!item.isAvailable ? (
+                      <p className="not-available">Not Available</p>
+                    ) : (
+                      <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          ))}
+
         </div>
+
+
+
+
+
       </div>
 
-      {/* Second Div - All Items Section */}
+
       <div className="all-items-section">
         <h2>All Menu Items</h2>
         <div className="all-items-grid">
@@ -124,11 +159,11 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Cart Section */}
+
       <div className="cart-section">
-        
+
         <div>
-            <h4>Menu</h4>
+          <h4>Menu</h4>
         </div>
         <div>
           <button className="coupon-btn">Apply Coupon</button>
@@ -136,7 +171,7 @@ const HomePage = () => {
         <div>
           <h3>🛒 Cart Items: {cartItems}</h3>
         </div>
-        
+
       </div>
     </div>
   );
