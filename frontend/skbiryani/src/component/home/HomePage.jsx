@@ -1,91 +1,145 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import ApiService from "../../services/ApiServices";
-
-
+import "./HomePage.css";
+import assets from "../../assets/assets.js";
+// import logo from '../../assets/assets.js/icon.jpg';
+import logo from "./icon.jpg";
 
 const HomePage = () => {
-
-  // const [selectedType, setSelectedType] = useState("All");
-  // const types = ["All", "Biryani", "Sweets"];
-
-  // const filteredItems =
-  //   selectedType === "All"
-  //     ? foodItems
-  //     : foodItems.filter((item) => item.type === selectedType);
-
+  const [selectedType, setSelectedType] = useState("All");
   const [cartItems, setCartItems] = useState(0);
+  const [foodItems, setFoodItems] = useState([]);
+  const [category, setCategory] = useState([]);
 
-  const handleAddToCart = () => {
-    // setCartItems(cartItems + 1);
+  // Get unique types from foodItems
+  const types = [
+    "All",
+    ...new Set(foodItems.map((item) => item.category.name)),
+  ];
+
+  const filteredItems =
+    selectedType === "All"
+      ? foodItems
+      : foodItems.filter((item) => item.category.name === selectedType);
+
+  const fetchList = async () => {
+    const response = await ApiService.getAllFood();
+    if (response) {
+      setFoodItems(response);
+    } else {
+      toast.error("Error while loading foods");
+    }
   };
 
-  const [foodItems, setFoodItems] = useState([]);
-
-    const fetchList = async() => {
-        const response = await ApiService.getAllFood();
-        if(response){
-          setFoodItems(response);
-            // console.log(response);
-        }else{
-            toast.error('Error while loading foods');
-        }
+  const fetchCategory = async () => {
+    const response = await ApiService.getAllCategory();
+    if (response) {
+      setCategory(response);
+    } else {
+      toast.error("Error while loading foods");
     }
+  };
 
-    useEffect( () => {
-      fetchList();
-  }, [] )
+  const handleAddToCart = (item) => {
+    setCartItems((prev) => prev + 1);
+    toast.success(`${item.name} added to cart!`);
+  };
+
+  useEffect(() => {
+    fetchList();
+    fetchCategory();
+  }, []);
 
   return (
-    <div className="food-menu-container">
-      {/* <div className="food-buttons">
-        {types.map((type) => (
-          <button
-            key={type}
-            onClick={() => setSelectedType(type)}
-            className={selectedType === type ? "active" : ""}
-          >
-            {type}
-          </button>
-        ))}
-      </div> */}
+    <div className="home-container">
+      {/* First Div - Filtered Section */}
+      <div className="filtered-section">
+        {/* Category Selection Div */}
+        <div className="category-selection">
+          <h2>Browse by Category</h2>
+          <div className="category-buttons">
+            {["All", ...category.map((cat) => cat.name)].map((type) => (
+              <button
+                key={type}
+                onClick={() => setSelectedType(type)}
+                className={`category-button ${
+                  selectedType === type ? "active-category" : ""
+                }`}
+                style={{
+                  backgroundImage: `url(${
+                    type === "All"
+                      ? logo // fallback image for "All"
+                      : category.find((c) => c.name === type)?.imageUrl || logo
+                  })`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  color: "#fff",
+                  textShadow: "0 0 5px rgba(0,0,0,0.7)",
+                }}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
 
-      <div className="food-cards">
-        {foodItems.map((item) => (
-          <div
-            key={item.id}
-            className="food-card"
-            style={{ backgroundImage: `url(${item.imageUrl})` }}
-          >
-            <div className="overlay">
-              <h4>{item.name}</h4>
-              <p>{item.type}</p>
-              <div className="food-actions">
-                <button onClick={() => alert(item.details)}>Details</button>
+        {/* Selected Category Items Div */}
+        <div className="category-items">
+          <h2>{selectedType === "All" ? "All Items" : selectedType}</h2>
+          <div className="items-grid">
+            {filteredItems.map((item) => (
+              <div key={item.id} className="food-card">
+                <img src={item.imageUrl} alt={item.name} />
+                <div className="food-info">
+                  <h3>{item.name}</h3>
+                  <p>Type: {item.type}</p>
+                  <button onClick={() => handleAddToCart(item)}>
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Second Div - All Items Section */}
+      <div className="all-items-section">
+        <h2>All Menu Items</h2>
+        <div className="all-items-grid">
+          {foodItems.map((item) => (
+            <div key={item.id} className="food-card">
+              <img src={item.imageUrl} alt={item.name} />
+              <div className="food-info">
+                <h3>{item.name}</h3>
+                <p>Type: {item.type}</p>
+                <p>Price: ₹{item.price}</p>
                 <button onClick={() => handleAddToCart(item)}>
                   Add to Cart
                 </button>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="offer-cart-outer">
-        <div className="offer-cart">
-          {/* Left Section: Coupon */}
-          <div className="left-section">
-            <button className="coupon-btn">Show Coupons</button>
-          </div>
-
-          {/* Right Section: Cart */}
-          <div className="right-section">
-            <h3>🛒 Cart Items: {cartItems}</h3>
-          </div>
+          ))}
         </div>
       </div>
 
+      {/* Cart Section */}
+      <div className="cart-section">
+        
+        <div>
+            <h4>Menu</h4>
+        </div>
+        <div>
+          <button className="coupon-btn">Apply Coupon</button>
+        </div>
+        <div>
+          <h3>🛒 Cart Items: {cartItems}</h3>
+        </div>
+        
+      </div>
     </div>
   );
 };
+
 export default HomePage;

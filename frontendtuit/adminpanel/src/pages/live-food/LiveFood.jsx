@@ -10,7 +10,7 @@ const LiveFood = () => {
 
     const fetchList = async () => {
         const response = await ApiService.getAllFood();
-        console.log(response);
+        // console.log(response);
         if (response) {
             setList(response);
             // console.log(response);
@@ -79,8 +79,13 @@ const LiveFood = () => {
 
 
     return (
-        <div>
-            <div className="py-5 row justify-content-center">
+        <div className="main-livefood-container">
+
+            <div className="container">
+                <h1 className="text-red blink-hard">LIVE FOOD ON PORTAL</h1>
+                {/* <h1 className="text-red blink-soft">Soft Blink</h1>   */}
+            </div> 
+            <div className="py-1 row justify-content-center">
                 <div className="col-11 card">
                     <table className="table">
                         <thead className="tr">
@@ -100,17 +105,20 @@ const LiveFood = () => {
                                         <tr key={index}>
                                             <td>{index+1}</td>
                                             <td>
-                                                <img src={item.imageUrl} alt="item photo" height={80}></img>
+                                                <img className="livefoodimg" src={item.imageUrl} alt="item photo" ></img>
                                             </td>
                                             <td>{item.name}</td>
                                             <td>{item.category.name}</td>
-                                            <td>{item.price}</td>
+                                            <td>&#8377;{item.price}</td>
                                             <td>
                                                 <button className="btn btn-danger" onClick={() => hideShowItem(item.id)}>
                                                     <div>
 
                                                         <label className="switch">
-                                                            <input className="checkbox" type="checkbox" checked={item.isAvailable} />
+                                                            <input className="checkbox" 
+                                                                    type="checkbox" 
+                                                                    checked={item.isAvailable}
+                                                                    readOnly />
                                                             <svg
                                                                 className="svg"
                                                                 width="24px"
@@ -134,10 +142,10 @@ const LiveFood = () => {
                                                                     r="6"
                                                                     fill="none"
                                                                     stroke="#fff"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-dasharray="0 5 27.7 5"
-                                                                    stroke-dashoffset="0.01"
+                                                                    strokeWidth="2"
+                                                                    strokeLinecap="round"
+                                                                    strokeDasharray="0 5 27.7 5"
+                                                                    strokeDashoffset="0.01"
                                                                     transform="rotate(-90,12,12)"
                                                                 ></circle>
                                                                 <line
@@ -147,10 +155,10 @@ const LiveFood = () => {
                                                                     x2="12"
                                                                     y2="15"
                                                                     stroke="#fff"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-dasharray="9 9"
-                                                                    stroke-dashoffset="3"
+                                                                    strokeWidth="2"
+                                                                    strokeLinecap="round"
+                                                                    strokeDasharray="9 9"
+                                                                    strokeDashoffset="3"
                                                                 ></line>
                                                                 <line
                                                                     className="svg-line"
@@ -159,10 +167,10 @@ const LiveFood = () => {
                                                                     x2="12"
                                                                     y2="12"
                                                                     stroke="#fff"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-dasharray="6 6"
-                                                                    stroke-dashoffset="6"
+                                                                    strokeWidth="2"
+                                                                    strokeLinecap="round"
+                                                                    strokeDasharray="6 6"
+                                                                    strokeDashoffset="6"
                                                                 ></line>
                                                             </svg>
                                                             <span className="slider"></span>

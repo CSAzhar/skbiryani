@@ -22,7 +22,7 @@ const AddFood = () => {
         const name = event.target.name;
         const value = event.target.value;
         setData(data => ({...data, [name]: value}));
-        // console.log(data);
+     
     }
     // useEffect(() => {
     //     console.log(data);
@@ -38,7 +38,7 @@ const AddFood = () => {
         formData.append("file", image);
         try{
             const result =  await ApiService.addFood(formData);
-            console.log(result);
+            // console.log(result);
             if(result.statusCode === 200){
                 toast.success('Food Added successfully');
                 setData({name:'', description:'', categoryId:'', price:''});

@@ -11,7 +11,7 @@ export default class CategoryApiService{
     try {
         const response = await axios.post(this.BASE_URL, formData,{
             headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         }
     } );
         return response.data;

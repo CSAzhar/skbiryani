@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Header from './component/common/Header';
-import Footer from './component/common/Footer';
 import HomePage from './component/home/HomePage';
+import Header from './component/common/header/Header';
+import Footer from './component/common/footer/Footer';
 
 function App() {
   return (

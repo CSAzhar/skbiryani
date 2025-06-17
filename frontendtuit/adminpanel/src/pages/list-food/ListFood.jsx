@@ -7,7 +7,7 @@ const ListFood = () => {
 
     const fetchList = async() => {
         const response = await ApiService.getAllFood();
-        console.log(response);
+        // console.log(response);
         if(response){
             setList(response);
             // console.log(response);
@@ -19,7 +19,7 @@ const ListFood = () => {
     const removeFoodItem = async (foodId) => {
         let ans = confirm('food item -'+foodId+" will be deleted");
         if(ans){
-            console.log(foodId);
+            // console.log(foodId);
             const response = await ApiService.deleteFoodById(foodId);
             if(response){
                 toast.success('Deleted successfully');
@@ -37,7 +37,10 @@ const ListFood = () => {
 
     return (
 
-        <>
+        <div>
+
+            
+
             <div className="py-5 row justify-content-center">
                 <div className="col-11 card">
                     <table className="table">
@@ -79,7 +82,7 @@ const ListFood = () => {
                 </div>
             </div>
         
-        </>
+        </div>
     );
 }
 

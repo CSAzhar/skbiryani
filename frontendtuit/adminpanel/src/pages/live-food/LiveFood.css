@@ -1,4 +1,12 @@
+/* main live food page */
+.main-livefood-container{
+  display: flex;
+  flex-direction: column;
+  
+  
+}
 
+/* switch button from bootstrap */
 .switch {
     position: relative;
     width: 5.5em;
@@ -128,4 +136,45 @@
     stroke-dashoffset: -3;
     transition-delay: 0s, 0.25s;
   }
+
+
+
+  /* live food image by azhar  */
+
+  .livefoodimg{
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+  }
+
+  /* live food blink heading */
+
+  .container {
+  width: 100%;
+  /* margin-top: 5%; */
+  font-family: sans-serif;
+}
+h1 {
+  
+  float:left;
+  width: 100%;
+  text-align: center;
+  
+  /* margin-top: 1rem; */
+}
+.text-red {
+  color: green;
+}
+.blink-hard {
+  animation: blinker 1s step-end infinite;
+}
+.blink-soft {
+  animation: blinker 1.5s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
   

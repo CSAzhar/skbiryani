@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import CategoryApiService from "../../services/CategoryApiService";
 import { toast } from "react-toastify";
+import {assets} from '../../assets/assets';
 
 const AddCategory = () => {
 
+    const [image, setImage] = useState(false);
     const [allCategory, setAllCategory] = useState([]);
     const [data, setData] = useState({
             name:'',
@@ -17,13 +19,20 @@ const AddCategory = () => {
     }
     const onSubmitHandler = async (event) => {
         event.preventDefault();
-                // const formData = new FormData(event.target); 
+            
+                if(!image){
+                        toast.error('Please select an image');
+                        return;
+                }
+                const formData = new FormData(event.target); 
+                formData.append("file", image);
                 try{
-                    const result =  await CategoryApiService.addCategory(data);
+                    const result =  await CategoryApiService.addCategory(formData);
                     // console.log(result);
                     if(result){
                         toast.success('Food Added successfully');
                         setData({name:'', description:''});
+                        setImage(null);
                     }
                     getAllCategory();
                 }catch(error){
@@ -67,6 +76,12 @@ const AddCategory = () => {
         
                                 <form onSubmit={onSubmitHandler}>
         
+                                    <div className="mb-2">
+                                        <label htmlFor="image" className="form-label">
+                                            <img src={image ? URL.createObjectURL(image) : assets.upload} alt="upload file" width={60}></img>
+                                        </label>
+                                        <input type="file" className="form-control" id="image" hidden onChange={(e) => setImage(e.target.files[0])}/>
+                                    </div>
         
                                     <div className="mb-2">
                                         <label htmlFor="name" className="form-label">Item Name</label>
@@ -92,6 +107,7 @@ const AddCategory = () => {
                         <thead className="tr">
                             <tr>
                                 <th>S.No</th>
+                                <th>Image</th>
                                 <th>Name</th>
                                 <th>Description</th>
                             </tr>
@@ -101,7 +117,10 @@ const AddCategory = () => {
                                 allCategory.map( (item, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{item.id}</td>
+                                            <td>{index+1}</td>
+                                            <td>
+                                                <img src={item.imageUrl} width={60} alt="item image"/>
+                                            </td>
                                             <td>{item.name}</td>
                                             <td>{item.description}</td>
                                             <td>
