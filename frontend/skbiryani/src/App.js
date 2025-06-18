@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './component/home/HomePage';
@@ -13,6 +13,7 @@ function App() {
           <div className="content">
             <Routes>
               <Route path="/home" element={<HomePage />}/>
+              <Route path="/" element={<HomePage />}/>
             </Routes>
           </div>
           <Footer />

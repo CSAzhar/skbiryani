@@ -54,7 +54,10 @@ const HomePage = () => {
       <div className="filtered-section">
 
         <div className="category-selection">
-          <h2 className="cat-selec-text">What are you craving for?</h2>
+          <div>
+              <h2 className="cat-selec-text">What are you craving for?</h2>
+          </div>
+          
           <div className="category-buttons">
             {["All", ...category.map((cat) => cat.name)].map((type) => (
               <button
@@ -80,23 +83,7 @@ const HomePage = () => {
         </div>
 
 
-        {/* <div className="category-items">
-          <h2>{selectedType === "All" ? "All Items" : selectedType}</h2>
-          <div className="items-grid">
-            {filteredItems.map((item) => (
-              <div key={item.id} className="food-card">
-                <img src={item.imageUrl} alt={item.name} />
-                <div className="food-info">
-                  <h3>{item.name}</h3>
-                  <p>Type: {item.category.name}</p>
-                  <button onClick={() => handleAddToCart(item)}>
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div> */}
+      
 
         <div className="category-items">
 
@@ -110,14 +97,17 @@ const HomePage = () => {
             >
               <div className="card-overlay">
                 <div className="card-overlay-f">
-                  <h3>{item.name}</h3>
-                  <p>{item.description}</p>
+                  <p className="card-verlay-f-p1">{item.name}</p>
+                  {/* <p>|</p> */}
+                  <p className="card-verlay-f-p2">{item.description}</p>
                 </div>
-
+                  
                 <div className="card-overlay-s">
-                  <div>
-                    <h3>&#8377;{item.price}</h3>
+                  <div className="card-overlay-s-f-div">
+                    <p className="card-verlay-s-f-p1">&#8377;{item.price}</p>
+                    <p className="card-verlay-s-f-p2">per unit*</p>
                   </div>
+                  <div>|</div>
                   <div>
                     {!item.isAvailable ? (
                       <p className="not-available">Not Available</p>
@@ -144,15 +134,35 @@ const HomePage = () => {
         <h2>All Menu Items</h2>
         <div className="all-items-grid">
           {foodItems.map((item) => (
-            <div key={item.id} className="food-card">
-              <img src={item.imageUrl} alt={item.name} />
-              <div className="food-info">
-                <h3>{item.name}</h3>
-                <p>Type: {item.type}</p>
-                <p>Price: ₹{item.price}</p>
-                <button onClick={() => handleAddToCart(item)}>
-                  Add to Cart
-                </button>
+            <div
+              key={item.id}
+              className="custom-food-card"
+              style={{
+                backgroundImage: `url(${item.imageUrl})`,
+              }}
+            >
+              <div className="card-overlay">
+                <div className="card-overlay-f">
+                  <p className="card-verlay-f-p1">{item.name}</p>
+                  {/* <p>|</p> */}
+                  <p className="card-verlay-f-p2">{item.description}</p>
+                </div>
+                  
+                <div className="card-overlay-s">
+                  <div className="card-overlay-s-f-div">
+                    <p className="card-verlay-s-f-p1">&#8377;{item.price}</p>
+                    <p className="card-verlay-s-f-p2">per unit*</p>
+                  </div>
+                  <div>|</div>
+                  <div>
+                    {!item.isAvailable ? (
+                      <p className="not-available">Not Available</p>
+                    ) : (
+                      <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                    )}
+                  </div>
+                </div>
+
               </div>
             </div>
           ))}
@@ -160,7 +170,7 @@ const HomePage = () => {
       </div>
 
 
-      <div className="cart-section">
+      <div className="cart-section-footer">
 
         <div>
           <h4>Menu</h4>
@@ -173,6 +183,7 @@ const HomePage = () => {
         </div>
 
       </div>
+
     </div>
   );
 };

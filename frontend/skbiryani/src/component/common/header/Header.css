@@ -20,21 +20,28 @@
 /* Logo Section */
 .header-logo {
   flex: 1;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  /* height: 50px;
+  width: 50px; */
+  /* border-radius: 50%; */
+  /* background-color: orange; */
 }
 
 .logo-image {
+
   height: 50px;
   width: auto;
   max-width: 100%;
+  border-radius: 50%;
 }
 
 /* Hotel Name Section */
 .header-title {
   flex: 2;
   text-align: center;
+  /* background-color: green; */
 }
 
 .hotel-name {
@@ -56,9 +63,10 @@
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: baseline;
   cursor: pointer;
   transition: all 0.3s ease;
+  /* background-color: yellow; */
 }
 
 .header-login:hover {
@@ -80,7 +88,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-container {
-    flex-direction: column;
+    flex-direction: row;
     padding: 10px;
   }
 
@@ -95,9 +103,10 @@
 
   .header-login {
     justify-content: center;
+    align-items: center;
   }
 
   .hotel-name {
-    font-size: 1.5rem;
+    font-size: 1.0rem;
   }
 }

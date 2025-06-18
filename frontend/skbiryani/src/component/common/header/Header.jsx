@@ -23,7 +23,7 @@ const Header = () => {
 
         {/* Hotel Name Section */}
         <div className="header-title">
-          <h1 className="hotel-name">SHAHI KITCHEN BIRYANI</h1>
+          <h3 className="hotel-name">SHAHI KITCHEN BIRYANI</h3>
           <p className="hotel-tagline">Luxury Redefined Biryani</p>
         </div>
 
