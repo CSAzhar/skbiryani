@@ -1,10 +1,14 @@
+import './Footer.css';
+
 const Footer = () => {
-    return(
-        <footer>
-            <span className="my-footer">
-               Shahi Kolkata Biryani | All Right Reserved &copy; {new Date().getFullYear()}
-            </span>
-        </footer>
+    return (
+        <div className="page-wrapper">
+
+                Shahi Kolkata Biryani | All Right Reserved &copy; {new Date().getFullYear()}
+            
+        </div>
+
+
     );
 }
 export default Footer;

@@ -1,0 +1,12 @@
+
+  
+/* App container (usually in App.css or body styles) */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 50px;
+    background-color: aquamarine;
+
+  }
+
+  

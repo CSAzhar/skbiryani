@@ -18,6 +18,12 @@
   margin: 1px;
   
 }
+.filtered-section hr{
+  margin: 10px 0px;
+  height: 2px;
+  background-color: #e2e2e2;
+  border: none;
+}
 
 .category-selection {
   flex: 1;
@@ -28,6 +34,7 @@
   position: sticky;
   top: 0;
   z-index: 1001;
+  padding: 10px;
 }
 .cat-selec-text{
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -74,9 +81,10 @@
   cursor: pointer;
   transition: all 0.2s;
   /* background-color: #4CAF50; */
-  height: 70px;
+  height: 90px;
   width: 70px;
   border-radius: 50%;
+  margin: 10px;
 }
 
 .category-buttons button:hover {
@@ -86,6 +94,7 @@
 .category-buttons .active-category {
   background: #4CAF50;
   color: white;
+  border: 2px rgb(247, 4, 4) solid;
 }
 
 
@@ -222,8 +231,8 @@ body {
 }
 
 .custom-food-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  /* transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); */
 }
 
 .card-overlay {
@@ -323,3 +332,42 @@ body {
   padding: 10px;
   
 } 
+
+.float-meanu{
+  padding: 5px;
+  position: fixed;
+  bottom: 0;
+  background-color: green;
+  height: 50px;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: space-around;
+  border-radius: 15px;
+
+}
+.partone{
+  height: 100%;
+  width: fit-content;
+}
+.cart-div-in-f-m{
+  height: 95%;
+  width: fit-content;
+  /* padding: 5%; */
+  background-color: pink;
+  font-weight: bold;
+  font-size: larger;
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.card-div-p{
+  width: fit-content;
+  /* margin: 5%; */
+  
+}

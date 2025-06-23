@@ -1,14 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import ApiService from "../../services/ApiServices";
 import "./HomePage.css";
 import logo from "./icon.jpg";
+import { Link } from "react-router-dom";
+import { StoreContext } from "../../context/StoreContext";
 
 const HomePage = () => {
   const [selectedType, setSelectedType] = useState("All");
   const [cartItems, setCartItems] = useState(0);
   const [foodItems, setFoodItems] = useState([]);
   const [category, setCategory] = useState([]);
+
+  const {foodQuantity, increaseFoodQuantity, decreseFoodQuantity, cartQuantity} = useContext(StoreContext);
+
+  const sectionRef = useRef(null);
+
+  const scrollToSection = () => {
+    sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const types = [
     "All",
@@ -46,18 +56,19 @@ const HomePage = () => {
   useEffect(() => {
     fetchList();
     fetchCategory();
+    scrollToSection();
   }, []);
 
   return (
     <div className="home-container">
 
-      <div className="filtered-section">
+      <div className="filtered-section" >
 
         <div className="category-selection">
           <div>
-              <h2 className="cat-selec-text">What are you craving for?</h2>
+            <h2 className="cat-selec-text">What are you craving for?</h2>
           </div>
-          
+
           <div className="category-buttons">
             {["All", ...category.map((cat) => cat.name)].map((type) => (
               <button
@@ -79,13 +90,15 @@ const HomePage = () => {
                 {type}
               </button>
             ))}
+            
           </div>
         </div>
 
+        <hr></hr>
+        
 
-      
 
-        <div className="category-items">
+        <div className="category-items" >
 
           {filteredItems.map((item) => (
             <div
@@ -101,7 +114,7 @@ const HomePage = () => {
                   {/* <p>|</p> */}
                   <p className="card-verlay-f-p2">{item.description}</p>
                 </div>
-                  
+
                 <div className="card-overlay-s">
                   <div className="card-overlay-s-f-div">
                     <p className="card-verlay-s-f-p1">&#8377;{item.price}</p>
@@ -112,7 +125,25 @@ const HomePage = () => {
                     {!item.isAvailable ? (
                       <p className="not-available">Not Available</p>
                     ) : (
-                      <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
+
+
+                      foodQuantity[item.id] > 0 ? (
+                        <div className="d-flex align-items-center gap-2">
+                          <button className="btn btn-danger btn-sm" onClick={() => decreseFoodQuantity(item.id)}>
+                            <i className="bi bi-dash-circle"></i>
+                          </button>
+                          <span className="fw-bold">{foodQuantity[item.id]}</span>
+                          <button className="btn-success btn-sm" onClick={() => increaseFoodQuantity(item.id)}>
+                            <i className="bi bi-plus-circle"></i>
+                          </button>
+                        </div>
+                      ) : (
+                        <button className="btn-primary btn-sm" onClick={() => increaseFoodQuantity(item.id)}>
+                          <i className="bi bi-plus-circle"></i>
+                        </button>
+                      )
+
+
                     )}
                   </div>
                 </div>
@@ -147,7 +178,7 @@ const HomePage = () => {
                   {/* <p>|</p> */}
                   <p className="card-verlay-f-p2">{item.description}</p>
                 </div>
-                  
+
                 <div className="card-overlay-s">
                   <div className="card-overlay-s-f-div">
                     <p className="card-verlay-s-f-p1">&#8377;{item.price}</p>
@@ -170,19 +201,22 @@ const HomePage = () => {
       </div>
 
 
-      <div className="cart-section-footer">
 
+
+      <div className="float-meanu">
         <div>
           <h4>Menu</h4>
         </div>
         <div>
-          <button className="coupon-btn">Apply Coupon</button>
+          <button className="coupon-btn">Coupon & Offers</button>
         </div>
-        <div>
-          <h3>🛒 Cart Items: {cartItems}</h3>
-        </div>
-
+        <Link to="/cart" className="partone">
+          <div className="cart-div-in-f-m">
+            <p className="card-div-p">🛒 Cart: {cartQuantity}</p>
+          </div>
+        </Link>
       </div>
+
 
     </div>
   );
