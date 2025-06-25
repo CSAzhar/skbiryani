@@ -210,6 +210,14 @@ const HomePage = () => {
         <div>
           <button className="coupon-btn">Coupon & Offers</button>
         </div>
+
+        <Link to="/cart">
+          <div className="position-relative">
+            <img src="" alt="🛒" height={32} width={32} className="position-relative" />
+            <span className="position-absolute top-0 start-100 trnaslate-middle badge rounded-pill bg-warning">{cartQuantity}</span>
+          </div>
+        </Link>
+
         <Link to="/cart" className="partone">
           <div className="cart-div-in-f-m">
             <p className="card-div-p">🛒 Cart: {cartQuantity}</p>

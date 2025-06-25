@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { StoreContextProvider } from './context/StoreContext';
+import PlaceOrder from './component/PlaceOrder/PlaceOrder';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/" element={<HomePage />} />
+              <Route path="/place-order" element={<PlaceOrder />} />
             </Routes>
           </div>
           <Footer />

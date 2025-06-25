@@ -1,6 +1,8 @@
 .cart-item img {
     max-width: 100px;
-    height: auto;
+    /* height: auto; */
+    padding: 3px;
+    border-radius: 40px;
 }
 
 .quantity-input {
@@ -10,4 +12,9 @@
 .cart-summary {
     background-color: #f8f9fa;
     border-radius: 10px;
+}
+.cart-hr{
+    margin-top: 10px;
+    height: 2px;
+    color: #e2e2e2;
 }
