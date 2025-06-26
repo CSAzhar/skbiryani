@@ -5,6 +5,7 @@ import "./HomePage.css";
 import logo from "./icon.jpg";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
+import { assets } from "../../assets/assets";
 
 const HomePage = () => {
   const [selectedType, setSelectedType] = useState("All");
@@ -213,16 +214,16 @@ const HomePage = () => {
 
         <Link to="/cart">
           <div className="position-relative">
-            <img src="" alt="🛒" height={32} width={32} className="position-relative" />
+            <img src={assets.cart} alt="🛒" height={32} width={32} className="position-relative" />
             <span className="position-absolute top-0 start-100 trnaslate-middle badge rounded-pill bg-warning">{cartQuantity}</span>
           </div>
         </Link>
 
-        <Link to="/cart" className="partone">
+        {/* <Link to="/cart" className="partone">
           <div className="cart-div-in-f-m">
             <p className="card-div-p">🛒 Cart: {cartQuantity}</p>
           </div>
-        </Link>
+        </Link> */}
       </div>
 
 

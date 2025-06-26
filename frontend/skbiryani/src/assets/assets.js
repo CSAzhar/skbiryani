@@ -1,5 +1,10 @@
 import logo from './logo.jpg';
+import cart from './cart.png';
+import cart2 from './cart2.jpg';
 
 export const assets = {
-    logo
+    logo,
+    cart,
+    cart2
+
 };

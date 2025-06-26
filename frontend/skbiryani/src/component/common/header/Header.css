@@ -10,9 +10,11 @@
 
 .header-container {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  max-width: 1200px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  
+  align-items: center;
+  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -63,10 +65,17 @@
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  align-items: baseline;
+  align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  
   /* background-color: yellow; */
+}
+.cart-logo-header{
+  margin-right: 25px;
+}
+.custom-button{
+margin: 2px;
 }
 
 .header-login:hover {
@@ -85,6 +94,7 @@
   font-size: 1rem;
 }
 
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-container {
@@ -100,13 +110,23 @@
     text-align: center;
     margin: 5px 0;
   }
+  .hotel-name{
+    text-wrap-style: auto;
+  }
 
   .header-login {
+    flex-direction: row;
     justify-content: center;
+    flex-direction: column-reverse;
     align-items: center;
+  }
+  .cart-logo-header{
+    margin-right: 0px;
+    margin-bottom: 3pxs;
   }
 
   .hotel-name {
     font-size: 1.0rem;
   }
+  
 }

@@ -10,6 +10,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { StoreContextProvider } from './context/StoreContext';
 import PlaceOrder from './component/PlaceOrder/PlaceOrder';
+import LoginPage from './component/auth/login/LoginPage';
+import Register from './component/auth/register/Register';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/" element={<HomePage />} />
               <Route path="/place-order" element={<PlaceOrder />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
           </div>
           <Footer />

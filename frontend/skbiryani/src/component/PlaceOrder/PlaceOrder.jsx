@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import './PlaceOrder.css';
+import { StoreContext } from "../../context/StoreContext";
+import { calculateCartTotals } from "../../utils/cartUtils";
 
 const PlaceOrder = () => {
+
+  const { foodList, foodQuantity, setFoodQuantity } = useContext(StoreContext);
+
+  const cartItems = foodList.filter(food => foodQuantity[food.id] > 0);
+  
+  const {subTotal, shippingCharge, tax, total} = calculateCartTotals(cartItems, foodQuantity);
+
   return (
 
-    <div className="placeorder-outer">
+    <div className="placeorder-outer container">
 
       <main>
 
@@ -12,50 +21,55 @@ const PlaceOrder = () => {
           {/* Cart Summary */}
           <div className="col-md-5 col-lg-4 order-md-last">
             <h4 className="d-flex justify-content-between align-items-center mb-3">
-              <span className="text-primary">Your cart</span>
-              <span className="badge bg-primary rounded-pill">3</span>
+              <span className="text-primary">Order Summary</span>
+              <span className="badge bg-primary rounded-pill">{cartItems.length}</span>
             </h4>
             <ul className="list-group mb-3">
-              <li className="list-group-item d-flex justify-content-between lh-sm">
+              {cartItems.map((item) => (
+                <li className="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                  <h6 className="my-0">Product name</h6>
-                  <small className="text-body-secondary">Brief description</small>
+                  <h6 className="my-0">{item.name}</h6>
+                  <small className="text-body-secondary">Qty: {foodQuantity[item.id]}</small>
                 </div>
-                <span className="text-body-secondary">$12</span>
+                <span className="text-body-secondary">&#8377;{(foodQuantity[item.id]*item.price).toFixed(2)}</span>
               </li>
-              <li className="list-group-item d-flex justify-content-between lh-sm">
+              ))}
+
+              <li className="list-group-item d-flex justify-content-between">
                 <div>
-                  <h6 className="my-0">Second product</h6>
-                  <small className="text-body-secondary">Brief description</small>
+                  <span>Shipping</span>
                 </div>
-                <span className="text-body-secondary">$8</span>
+                <span className="text-body-secondary">&#8377;{subTotal === 0? 0.0 : shippingCharge.toFixed(2)}</span>
               </li>
-              <li className="list-group-item d-flex justify-content-between lh-sm">
+
+              <li className="list-group-item d-flex justify-content-between">
                 <div>
-                  <h6 className="my-0">Third item</h6>
-                  <small className="text-body-secondary">Brief description</small>
+                  <span>Tax</span>
                 </div>
-                <span className="text-body-secondary">$5</span>
+                <span className="text-body-secondary">&#8377;{tax.toFixed(2)}</span>
               </li>
-              <li className="list-group-item d-flex justify-content-between bg-body-tertiary">
+
+              {/* <li className="list-group-item d-flex justify-content-between bg-body-tertiary">
                 <div className="text-success">
                   <h6 className="my-0">Promo code</h6>
                   <small>EXAMPLECODE</small>
                 </div>
                 <span className="text-success">−$5</span>
-              </li>
+              </li> */}
+
               <li className="list-group-item d-flex justify-content-between">
-                <span>Total (USD)</span>
-                <strong>$20</strong>
+                <span>Total (INR)</span>
+                <strong>&#8377;{(total).toFixed(2)}</strong>
               </li>
             </ul>
 
-            <form className="card p-2">
+            {/* <form className="card p-2">
               <div className="input-group">
                 <input type="text" className="form-control" placeholder="Promo code" />
                 <button type="submit" className="btn btn-secondary">Redeem</button>
               </div>
-            </form>
+            </form> */}
+
           </div>
 
 
@@ -82,12 +96,12 @@ const PlaceOrder = () => {
                   </div>
                 </div>
                 <div className="col-12">
-                  <label htmlFor="address" className="form-label">Address</label>
-                  <input type="text" className="form-control" id="address" placeholder="1234 Main St" required />
+                  <label htmlFor="phone" className="form-label">Phone Number</label>
+                  <input type="number" className="form-control" id="phone" placeholder="9876543210" required />
                 </div>
                 <div className="col-12">
-                  <label htmlFor="address2" className="form-label">Address 2 <span className="text-body-secondary">(Optional)</span></label>
-                  <input type="text" className="form-control" id="address2" placeholder="Apartment or suite" />
+                  <label htmlFor="address" className="form-label">Address</label>
+                  <input type="text" className="form-control" id="address" placeholder="1234 Main St" required />
                 </div>
                 <div className="col-md-5">
                   <label htmlFor="country" className="form-label">Country</label>
@@ -100,7 +114,7 @@ const PlaceOrder = () => {
                   <label htmlFor="state" className="form-label">State</label>
                   <select className="form-select" id="state" required>
                     <option value="">Choose...</option>
-                    <option>Telangana</option>
+                    <option>Bihar</option>
                   </select>
                 </div>
               </div>
@@ -108,13 +122,15 @@ const PlaceOrder = () => {
               <hr className="my-4" />
 
 
-              <button className="w-100 btn btn-primary btn-lg" type="submit">
+              <button className="w-100 btn btn-primary btn-lg"
+              disabled={cartItems.length === 0}
+               type="submit">
                 Continue to checkout
               </button>
 
             </form>
 
-            
+
           </div>
         </div>
       </main>
