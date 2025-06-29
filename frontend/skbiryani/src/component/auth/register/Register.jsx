@@ -3,7 +3,7 @@ import './Register.css';
 import { Link } from "react-router-dom";
 
 const Register = () => {
-    return(
+    return (
         <div className="outer-div">
             <div className="container">
                 <div className="row">
@@ -13,11 +13,26 @@ const Register = () => {
                                 <h5 className="card-title text-center mb-5 fw-light fs-5">Sign Up</h5>
                                 <form>
                                     <div className="form-floating mb-3">
-                                        <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
+                                        <input type="text" className="form-control" id="floatingName" placeholder="name@example.com" 
+                                        required/>
+                                        <label htmlFor="floatingNamet">Full Name</label>
+                                    </div>
+                                    <div className="form-floating mb-3">
+                                        <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com"
+                                        required />
                                         <label htmlFor="floatingInput">Email address</label>
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
+                                        <input type="tel" className="form-control" id="floatingMobile" placeholder="name@example.com"
+                                        pattern="[0-9]{10}" maxlength="10" minlength="10"
+                                        requiredPlaceholder="Enter 10-digit number" required
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"
+                                        />
+                                        <label htmlFor="floatingNamet">Mobile</label>
+                                    </div>
+                                    <div className="form-floating mb-3">
+                                        <input type="password" className="form-control" id="floatingPassword" placeholder="Password"
+                                        required />
                                         <label htmlFor="floatingPassword">Password</label>
                                     </div>
 
