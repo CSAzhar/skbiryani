@@ -21,7 +21,7 @@ const Header = () => {
         {/* Logo Section */}
         <div className="header-logo">
           <img
-            src={assets.logo}
+            src={assets.skblogo}
             alt="Hotel Logo"
             className="logo-image"
             onClick={()=> navigate('/home')}

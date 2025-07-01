@@ -9,6 +9,7 @@ export const StoreContextProvider = (props) => {
     const [foodList, setFoodList] = useState([]);
     const [foodQuantity, setFoodQuantity] = useState({});
     const [cartQuantity, setCartQuantity] = useState(0);
+    const [token, setToken] = useState("");
 
     const getAllFood = async () => {
         const response = await ApiService.getAllFood();
@@ -33,7 +34,9 @@ export const StoreContextProvider = (props) => {
         increaseFoodQuantity,
         decreseFoodQuantity,
         cartQuantity,
-        foodList
+        foodList,
+        token,
+        setToken
     };
 
     useEffect(() => {

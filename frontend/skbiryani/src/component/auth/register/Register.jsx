@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import './Register.css';
 import { Link } from "react-router-dom";
 
 const Register = () => {
+
+    const[data, setData] = useState({
+        name: '',
+        email: '',
+        mobile: '',
+        password: ''
+    });
+
+    const onChangeHandler = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setData(data => ({...data, [name]: value}));
+        
+    }
+
+    const onSubmitHandler = (event) => {
+        event.preventDefault();
+        console.log(data);
+    }
+
     return (
         <div className="outer-div">
             <div className="container">
@@ -11,37 +31,57 @@ const Register = () => {
                         <div className="card border-0 shadow rounded-3 my-5">
                             <div className="card-body p-4 p-sm-5">
                                 <h5 className="card-title text-center mb-5 fw-light fs-5">Sign Up</h5>
-                                <form>
+                                <form onSubmit={onSubmitHandler}>
                                     <div className="form-floating mb-3">
-                                        <input type="text" className="form-control" id="floatingName" placeholder="name@example.com" 
+                                        <input type="text" 
+                                        className="form-control" 
+                                        id="floatingName"
+                                        placeholder="name@example.com" 
+                                        name="name"
+                                        onChange={onChangeHandler}
+                                        value={data.name}
                                         required/>
                                         <label htmlFor="floatingNamet">Full Name</label>
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com"
+                                        <input type="email" 
+                                        className="form-control" 
+                                        id="floatingInput" 
+                                        placeholder="name@example.com"
+                                        onChange={onChangeHandler}
+                                        name="email"
+                                        value={data.email}
                                         required />
                                         <label htmlFor="floatingInput">Email address</label>
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <input type="tel" className="form-control" id="floatingMobile" placeholder="name@example.com"
-                                        pattern="[0-9]{10}" maxlength="10" minlength="10"
-                                        requiredPlaceholder="Enter 10-digit number" required
+                                        <input type="tel" 
+                                        className="form-control" 
+                                        id="floatingMobile" 
+                                        placeholder="name@example.com"
+                                        pattern="[0-9]{10}" maxLength="10" minLength="10"
+                                        requiredPlaceholder="Enter 10-digit number" 
+                                        onChange={onChangeHandler}
+                                        name="mobile"
+                                        value={data.mobile}
+                                        required
                                         oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);"
                                         />
                                         <label htmlFor="floatingNamet">Mobile</label>
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <input type="password" className="form-control" id="floatingPassword" placeholder="Password"
+                                        <input type="password" 
+                                        className="form-control" 
+                                        id="floatingPassword" 
+                                        placeholder="Password"
+                                        onChange={onChangeHandler}
+                                        name="password"
+                                        value={data.password}
                                         required />
                                         <label htmlFor="floatingPassword">Password</label>
                                     </div>
 
-                                    {/* <div className="form-check mb-3">
-                                    <input className="form-check-input" type="checkbox" value="" id="rememberPasswordCheck" />
-                                        <label className="form-check-label" htmlFor="rememberPasswordCheck">
-                                            Remember password
-                                        </label>
-                                </div> */}
+                                    
                                     <div className="d-grid">
                                         <button className="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign
                                             up</button>

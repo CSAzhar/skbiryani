@@ -13,18 +13,18 @@ const LoginPage = () => {
                                 <h5 className="card-title text-center mb-5 fw-light fs-5">Log In</h5>
                                 <form>
                                     <div className="form-floating mb-3">
-                                        <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com"
+                                        <onInput type="email" className="form-control" id="floatingInput" placeholder="name@example.com"
                                         required />
                                         <label htmlFor="floatingInput">Email address</label>
                                     </div>
                                     <div className="form-floating mb-3">
-                                        <input type="password" className="form-control" id="floatingPassword" placeholder="Password"
+                                        <onInput type="password" className="form-control" id="floatingPassword" placeholder="Password"
                                         required />
                                         <label htmlFor="floatingPassword">Password</label>
                                     </div>
 
                                     {/* <div className="form-check mb-3">
-                                    <input className="form-check-input" type="checkbox" value="" id="rememberPasswordCheck" />
+                                    <onInput className="form-check-input" type="checkbox" value="" id="rememberPasswordCheck" />
                                         <label className="form-check-label" htmlFor="rememberPasswordCheck">
                                             Remember password
                                         </label>
