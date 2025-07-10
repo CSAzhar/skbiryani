@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import ApiService from "../../services/ApiServices";
 import "./HomePage.css";
 import logo from "./icon.jpg";
 import { Link } from "react-router-dom";
@@ -9,11 +8,15 @@ import { assets } from "../../assets/assets";
 
 const HomePage = () => {
   const [selectedType, setSelectedType] = useState("All");
-  const [cartItems, setCartItems] = useState(0);
-  const [foodItems, setFoodItems] = useState([]);
-  const [category, setCategory] = useState([]);
 
-  const {foodQuantity, increaseFoodQuantity, decreseFoodQuantity, cartQuantity} = useContext(StoreContext);
+  const { foodQuantity,
+          category,
+          increaseFoodQuantity, 
+          decreseFoodQuantity,
+          foodList
+                      } = useContext(StoreContext);
+
+  const cartItems = foodList.filter(food => foodQuantity[food.id] > 0);
 
   const sectionRef = useRef(null);
 
@@ -23,40 +26,20 @@ const HomePage = () => {
 
   const types = [
     "All",
-    ...new Set(foodItems.map((item) => item.category.name)),
+    ...new Set(foodList.map((item) => item.category.name)),
   ];
 
   const filteredItems =
     selectedType === "All"
-      ? foodItems
-      : foodItems.filter((item) => item.category.name === selectedType);
+      ? foodList
+      : foodList.filter((item) => item.category.name === selectedType);
 
-  const fetchList = async () => {
-    const response = await ApiService.getAllFood();
-    if (response) {
-      setFoodItems(response);
-    } else {
-      toast.error("Error while loading foods");
-    }
-  };
-
-  const fetchCategory = async () => {
-    const response = await ApiService.getAllCategory();
-    if (response) {
-      setCategory(response);
-    } else {
-      toast.error("Error while loading foods");
-    }
-  };
 
   const handleAddToCart = (item) => {
-    setCartItems((prev) => prev + 1);
     toast.success(`${item.name} added to cart!`);
   };
 
   useEffect(() => {
-    fetchList();
-    fetchCategory();
     scrollToSection();
   }, []);
 
@@ -165,7 +148,7 @@ const HomePage = () => {
       <div className="all-items-section">
         <h2>All Menu Items</h2>
         <div className="all-items-grid">
-          {foodItems.map((item) => (
+          {foodList.map((item) => (
             <div
               key={item.id}
               className="custom-food-card"
@@ -215,7 +198,7 @@ const HomePage = () => {
         <Link to="/cart">
           <div className="position-relative">
             <img src={assets.cart} alt="🛒" height={32} width={32} className="position-relative" />
-            <span className="position-absolute top-0 start-100 trnaslate-middle badge rounded-pill bg-warning">{cartQuantity}</span>
+            <span className="position-absolute top-0 start-100 trnaslate-middle badge rounded-pill bg-warning">{cartItems.length}</span>
           </div>
         </Link>
 

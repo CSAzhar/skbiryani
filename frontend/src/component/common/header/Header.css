@@ -72,7 +72,7 @@
   /* background-color: yellow; */
 }
 .cart-logo-header{
-  margin-right: 25px;
+  margin-right: 35px;
 }
 .custom-button{
 margin: 2px;
@@ -129,4 +129,9 @@ margin: 2px;
     font-size: 1.0rem;
   }
   
+}
+ul{
+  li{
+    cursor: pointer;
+  }
 }

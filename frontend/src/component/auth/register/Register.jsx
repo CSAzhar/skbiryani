@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import './Register.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthService from "../../../services/AuthService";
+import { toast } from "react-toastify";
 
 const Register = () => {
 
@@ -10,6 +12,7 @@ const Register = () => {
         mobile: '',
         password: ''
     });
+    const navigate = useNavigate();
 
     const onChangeHandler = (event) => {
         const name = event.target.name;
@@ -18,9 +21,14 @@ const Register = () => {
         
     }
 
-    const onSubmitHandler = (event) => {
+    const onSubmitHandler = async (event) => {
         event.preventDefault();
-        console.log(data);
+        const response = await AuthService.registerUser(data);
+        if(response){
+            toast.success('Registered');
+            console.log(response);
+            navigate("/login");
+        }
     }
 
     return (

@@ -8,7 +8,7 @@ export const StoreContextProvider = (props) => {
 
     const [foodList, setFoodList] = useState([]);
     const [foodQuantity, setFoodQuantity] = useState({});
-    const [cartQuantity, setCartQuantity] = useState(0);
+    const [category, setCategory] = useState([]);
     const [token, setToken] = useState("");
 
     const getAllFood = async () => {
@@ -20,28 +20,58 @@ export const StoreContextProvider = (props) => {
         }
     }
 
-    const increaseFoodQuantity = (foodId) => {
-        setFoodQuantity((prev) => ({ ...prev, [foodId]: (prev[foodId] || 0) + 1 }));
-        setCartQuantity(cartQuantity + 1);
+    const increaseFoodQuantity = async (foodId) => {
+        if(!token){
+            toast.warning('Login or Signup to add Items');
+            return;
+        }
+       const response = await ApiService.addFoodQuantityTocart(foodId, token);
+       setFoodQuantity(response.items);
+    //    console.log(foodQuantity);
     }
 
-    const decreseFoodQuantity = (foodId) => {
-        setFoodQuantity((prev) => ({ ...prev, [foodId]: prev[foodId] > 0 ? prev[foodId] - 1 : 0 }));
-        setCartQuantity(cartQuantity === 0 ? 0 : cartQuantity - 1);
+    const decreseFoodQuantity = async (foodId) => {
+        const response = await ApiService.removeFoodQuantityTocart(foodId, token);
+        setFoodQuantity(response.items);
     }
+    const getFoodQuantity = async () => {
+        const response = await ApiService.getFoodQuantityTocart(token);
+        setFoodQuantity(response.items);
+    }
+    const fetchCategory = async () => {
+        const response = await ApiService.getAllCategory();
+        if (response) {
+          setCategory(response);
+        } else {
+          toast.error("Error while loading foods");
+        }
+      };
     const contextValue = {
         foodQuantity,
+        setFoodQuantity,
         increaseFoodQuantity,
         decreseFoodQuantity,
-        cartQuantity,
         foodList,
         token,
-        setToken
+        setToken,
+        category
     };
 
     useEffect(() => {
+        // On first load, check localStorage
         getAllFood();
-    }, [])
+          fetchCategory();
+        const localToken = localStorage.getItem('token');
+        if (localToken) {
+          setToken(localToken);
+        }
+      }, []);
+      
+      useEffect(() => {
+        if (token) {
+          getFoodQuantity(token);  // only runs when token is ready
+        }
+      }, [token]);
 
     return (
         <StoreContext.Provider value={contextValue}>

@@ -12,6 +12,7 @@ import { StoreContextProvider } from './context/StoreContext';
 import PlaceOrder from './component/PlaceOrder/PlaceOrder';
 import LoginPage from './component/auth/login/LoginPage';
 import Register from './component/auth/register/Register';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<Register />} />
             </Routes>
+            <ToastContainer />
           </div>
           <Footer />
         </div>
