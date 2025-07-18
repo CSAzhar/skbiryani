@@ -36,7 +36,7 @@ export const StoreContextProvider = (props) => {
     }
     const getFoodQuantity = async () => {
         const response = await ApiService.getFoodQuantityTocart(token);
-        setFoodQuantity(response.items);
+        setFoodQuantity(response?.items ?? {});
     }
     const fetchCategory = async () => {
         const response = await ApiService.getAllCategory();
@@ -49,6 +49,7 @@ export const StoreContextProvider = (props) => {
     const contextValue = {
         foodQuantity,
         setFoodQuantity,
+        getFoodQuantity,
         increaseFoodQuantity,
         decreseFoodQuantity,
         foodList,

@@ -112,7 +112,11 @@ export default class ApiService{
         try{
             const response = await axios.get(
                 `${this.BASE_URL_CART}`,
-                {headers: { Authorization: `Bearer ${token}`}}
+                {headers: 
+                    { 
+                        Authorization: `Bearer ${token}`
+                    }
+                }
             );
             if(response.status === 200){
                 return response.data;
@@ -121,9 +125,116 @@ export default class ApiService{
             }
         } catch(error)
         {
-            toast.error('Api error', error);
+            console.error('Api error', error);
+            return null;
+        }
+    }
+
+    static async clearCart(token){
+        try{
+            const response = await axios.delete(
+                `${this.BASE_URL_CART}`,
+                {headers: { Authorization: `Bearer ${token}`}}
+            );
+            if(response.status === 200){
+                return response.data;
+            }else{
+                console.error('Error clearing cart in api');
+            }
+        } catch(error)
+        {
+            console.error('Api error', error);
             throw error;
         }
     }
+
+    static BASE_URL_ORDER = 'http://localhost:8002/skb/order/';
+
+    static async createOrder(orderData, token){
+        // console.log('Final Order Data JSON:', JSON.stringify(orderData, null, 2));
+        try {
+            console.log('data in service', orderData);
+            const response = await axios.post(
+                `${this.BASE_URL_ORDER}create`,
+                orderData,
+                {
+                    headers: { 
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                    }
+                }
+            );
+            if(response.status === 200){
+                console.log(response.data);
+                return response.data;
+            }else{
+                console.log(response.data);
+            }
+        } catch (error) {
+            console.error(`Order request failed`);
+        }
+    }
+
+    static async verifyPaymentOrder(paymentData, token){
+        try {
+            // console.log('data in service', orderData)
+            const response = await axios.post(
+                `${this.BASE_URL_ORDER}verify`,
+                paymentData,
+                {headers: { Authorization: `Bearer ${token}`}}
+            );
+            if(response.status === 200){
+                
+                return {
+                    statusCode:200,
+                    message: 'successful'
+                }
+            }
+        } catch (error) {
+            console.error(`Order request failed`);
+        }
+    }
+
+    static async deleteOrder(orderId, token){
+        try {
+            // console.log('data in service', orderData)
+            const response = await axios.delete(
+                `${this.BASE_URL_ORDER}${orderId}`,
+                {headers: { Authorization: `Bearer ${token}`}}
+            );
+            if(response.status === 204){
+                return {
+                    statusCode: 200,
+                    message: 'successful'
+                }
+            }
+        } catch (error) {
+            console.error(`Order deletion failed`);
+        }
+    }
+
+
+
+
+    static async fetchOrdersOfUser(token){
+        try {
+            const result = await axios.get(
+                `${this.BASE_URL_ORDER}`,
+                {headers:
+                    {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            if(result.status === 200){
+                return result.data;
+            }
+
+        } catch (error) {
+            console.error('Error getting orders list');
+        }
+    }
+
+    
 
 }

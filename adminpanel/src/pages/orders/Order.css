@@ -1,0 +1,26 @@
+@media (max-width: 768px) {
+    table thead {
+      display: none;
+    }
+  
+    table tbody tr {
+      display: block;
+      margin-bottom: 1rem;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      padding: 10px;
+    }
+  
+    table tbody td {
+      display: block;
+      text-align: left;
+      padding: 5px 10px;
+      border: none;
+      border-bottom: 1px solid #eee;
+    }
+  
+    table tbody td:last-child {
+      border-bottom: none;
+    }
+  }
+  

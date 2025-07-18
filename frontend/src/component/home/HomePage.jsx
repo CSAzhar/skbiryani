@@ -50,7 +50,7 @@ const HomePage = () => {
 
         <div className="category-selection">
           <div>
-            <h2 className="cat-selec-text">What are you craving for?</h2>
+            <h3 className="cat-selec-text">What are you craving for ?</h3>
           </div>
 
           <div className="category-buttons">
@@ -90,6 +90,7 @@ const HomePage = () => {
               className="custom-food-card"
               style={{
                 backgroundImage: `url(${item.imageUrl})`,
+                // backgroundColor:"white"
               }}
             >
               <div className="card-overlay">

@@ -13,6 +13,7 @@ import PlaceOrder from './component/PlaceOrder/PlaceOrder';
 import LoginPage from './component/auth/login/LoginPage';
 import Register from './component/auth/register/Register';
 import { ToastContainer } from 'react-toastify';
+import MyOrders from './component/myorders/MyOrders';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/place-order" element={<PlaceOrder />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/myorders" element={<MyOrders />} />
             </Routes>
             <ToastContainer />
           </div>
