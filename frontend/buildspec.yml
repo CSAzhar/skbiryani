@@ -1,0 +1,32 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET: "skbuser"
+    CLOUDFRONT_ID: "YOUR_USER_CLOUDFRONT_ID"
+
+phases:
+  install:
+    commands:
+      - echo "Installing frontend dependencies..."
+      - npm install
+      - npm install -g awscli
+
+  pre_build:
+    commands:
+      - echo "Checking for frontend changes..."
+      - if [ -z "$(git diff HEAD~1 --name-only frontend/)" ]; then
+          echo "No frontend changes detected. Exiting.";
+          exit 0;
+        fi
+
+  build:
+    commands:
+      - echo "Building frontend..."
+      - npm run build
+
+  post_build:
+    commands:
+      - echo "Deploying to S3..."
+      - aws s3 sync build/ s3://$S3_BUCKET --delete
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths "/*"
