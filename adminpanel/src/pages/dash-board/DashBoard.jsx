@@ -12,7 +12,7 @@ const DashBoard = () => {
 
     return (
         <div className="container py-5">
-            <h2 className="mb-4 text-center fw-bold text-primary">Admin Dashboard</h2>
+            <h2 className="mb-4 text-center fw-bold text-primary">Admins Dashboard</h2>
 
             <div className="row g-4">
                 {stats.map((stat, index) => (
