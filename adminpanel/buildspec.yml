@@ -1,38 +1,22 @@
 version: 0.2
 
-env:
-  variables:
-    S3_BUCKET: "skbadmin"
-    # CLOUDFRONT_ID: "YOUR_ADMIN_CLOUDFRONT_ID"
-
 phases:
   install:
     commands:
       - echo "Installing admin panel dependencies..."
       - npm install
       - npm install -g awscli
-
-  pre_build:
-    commands:
-      - echo "Checking for admin panel changes..."
-      - if [ -z "$(git diff HEAD~1 --name-only adminpanel/)" ]; then
-          echo "No admin panel changes detected. Exiting.";
-          exit 0;
-        fi
-
+    working-directory: adminpanel
   build:
     commands:
-      - echo "Building admin panel..."
       - npm run build
-
+    working-directory: adminpanel
   post_build:
     commands:
-      - echo "Deploying to S3..."
-      - aws s3 sync dist/ s3://$S3_BUCKET --delete
-      # - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths "/*"
+      - aws s3 sync build/ s3://skbadmin --delete
+    working-directory: adminpanel
 
 artifacts:
   files:
     - '**/*'
-  base-directory: dist
-  discard-paths: no
+  base-directory: adminpanel/build
