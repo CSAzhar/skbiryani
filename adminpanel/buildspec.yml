@@ -8,12 +8,14 @@ phases:
       - echo "Moving to adminpanel directory..."
       - cd adminpanel && npm install
       - echo "Post-install directory: $(pwd)"
+  
   build:
     commands:
       - echo "BUILD PHASE - Current directory: $(pwd)"
       - ls -la
       - echo "Building application..."
       - cd adminpanel && npm run build
+  
   post_build:
     commands:
       - echo "POST_BUILD PHASE - Current directory: $(pwd)"
