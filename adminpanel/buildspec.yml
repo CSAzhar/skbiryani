@@ -14,19 +14,22 @@ phases:
       - echo "Building from protected location..."
       - cd /tmp/adminpanel-build && npm run build
       - echo "Copying build artifacts..."
-      - mkdir -p adminpanel/build
-      - cp -r /tmp/adminpanel-build/build/* adminpanel/build/
+      - mkdir -p adminpanel/dist
+      - cp -r /tmp/adminpanel-build/dist/* adminpanel/dist/
 
   post_build:
     commands:
       - echo "Deploying to S3..."
-      - aws s3 sync adminpanel/build/ s3://skbadmin --delete
+      - aws s3 sync adminpanel/dist/ s3://skbadmin --delete
 
 artifacts:
   files:
     - '**/*'
-  base-directory: adminpanel/build
+  base-directory: adminpanel/dist
 
 cache:
   paths:
     - '/tmp/adminpanel-build/node_modules/**/*'
+
+runtime-versions:
+  nodejs: 20
