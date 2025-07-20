@@ -3,20 +3,24 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Checking directory structure..."
+      - echo "Starting installation in ${CODEBUILD_SRC_DIR}"
       - ls -la
-      - echo "Installing dependencies..."
-      - cd adminpanel && npm install
+      - echo "Copying adminpanel to protected location..."
+      - cp -r adminpanel /tmp/adminpanel-build
+      - cd /tmp/adminpanel-build && npm install
 
   build:
     commands:
-      - echo "Building application..."
-      - cd adminpanel && npm run build
+      - echo "Building from protected location..."
+      - cd /tmp/adminpanel-build && npm run build
+      - echo "Copying build artifacts..."
+      - mkdir -p adminpanel/build
+      - cp -r /tmp/adminpanel-build/build/* adminpanel/build/
 
   post_build:
     commands:
       - echo "Deploying to S3..."
-      - cd adminpanel && aws s3 sync build/ s3://skbadmin --delete
+      - aws s3 sync adminpanel/build/ s3://skbadmin --delete
 
 artifacts:
   files:
@@ -25,4 +29,4 @@ artifacts:
 
 cache:
   paths:
-    - 'adminpanel/node_modules/**/*'
+    - '/tmp/adminpanel-build/node_modules/**/*'
