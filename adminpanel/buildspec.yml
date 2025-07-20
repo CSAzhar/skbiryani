@@ -3,15 +3,12 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing dependencies..."
-      - npm install  # No cd needed since we're already in adminpanel
+      - npm install
   build:
     commands:
-      - echo "Building..."
       - npm run build
   post_build:
     commands:
-      - echo "Deploying to S3..."
       - aws s3 sync build/ s3://skbadmin --delete
 
 artifacts:
