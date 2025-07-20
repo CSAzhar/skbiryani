@@ -3,15 +3,22 @@ version: 0.2
 phases:
   install:
     commands:
-      - npm install
+      - echo "Moving to adminpanel directory..."
+      - cd adminpanel && npm install
   build:
     commands:
-      - npm run build
+      - echo "Building application..."
+      - cd adminpanel && npm run build
   post_build:
     commands:
-      - aws s3 sync build/ s3://skbadmin --delete
+      - echo "Deploying to S3..."
+      - cd adminpanel && aws s3 sync build/ s3://skbadmin --delete
 
 artifacts:
   files:
     - '**/*'
-  base-directory: build
+  base-directory: adminpanel/build
+
+cache:
+  paths:
+    - 'adminpanel/node_modules/**/*'
