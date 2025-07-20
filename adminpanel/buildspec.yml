@@ -3,17 +3,20 @@ version: 0.2
 phases:
   install:
     commands:
+      - cd adminpanel
+      - echo "Installing admin panel dependencies..."
       - npm install
       - npm install -g awscli
-    working-directory: adminpanel
   build:
     commands:
+      - cd adminpanel
+      - echo "Building admin panel..."
       - npm run build
-    working-directory: adminpanel
   post_build:
     commands:
+      - cd adminpanel
+      - echo "Deploying to S3..."
       - aws s3 sync build/ s3://skbadmin --delete
-    working-directory: adminpanel
 
 artifacts:
   files:
