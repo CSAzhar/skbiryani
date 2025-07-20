@@ -3,18 +3,42 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Starting install phase"
-      - cd adminpanel && npm install
-  
+      - echo "Checking directory structure..."
+      - ls -la
+      - echo "Installing dependencies in adminpanel..."
+      - if [ -d "adminpanel" ]; then
+          cd adminpanel && npm install;
+        else
+          echo "ERROR: adminpanel directory missing! Contents:";
+          ls -la;
+          exit 1;
+        fi
+
   build:
     commands:
-      - echo "Starting build phase"
-      - cd adminpanel && npm run build
-  
+      - echo "Current directory before build: $(pwd)"
+      - ls -la
+      - echo "Building adminpanel application..."
+      - if [ -d "adminpanel" ]; then
+          cd adminpanel && npm run build;
+        else
+          echo "ERROR: adminpanel directory missing after install! Contents:";
+          ls -la;
+          exit 1;
+        fi
+
   post_build:
     commands:
-      - echo "Starting deployment"
-      - cd adminpanel && aws s3 sync build/ s3://skbadmin --delete
+      - echo "Current directory before deploy: $(pwd)"
+      - ls -la
+      - echo "Deploying to S3..."
+      - if [ -d "adminpanel/build" ]; then
+          aws s3 sync adminpanel/build/ s3://skbadmin --delete;
+        else
+          echo "ERROR: adminpanel/build directory not found! Contents:";
+          ls -la adminpanel || echo "adminpanel directory missing";
+          exit 1;
+        fi
 
 artifacts:
   files:
@@ -24,6 +48,3 @@ artifacts:
 cache:
   paths:
     - 'adminpanel/node_modules/**/*'
-
-runtime-versions:
-  nodejs: 20
